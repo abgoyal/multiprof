@@ -1,0 +1,13 @@
+[settings]
+# The suffix for Wrappers. An empty string ("") is recommended for a seamless
+# experience, but requires placing the Wrapper Directory first in your PATH.
+# A safe default is "_w".
+suffix = "_w"
+
+[[rules]]
+# Rules are checked from top to bottom. The first pattern that matches wins.
+# This example Rule is safe and will not shadow other Rules.
+# You can use variables like $HOME, which will be expanded.
+pattern = "$HOME/multiprof-example/**"
+home = "$HOME/multiprof-example"
+

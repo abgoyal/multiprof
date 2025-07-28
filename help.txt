@@ -1,0 +1,57 @@
+multiprof: A tool-agnostic wrapper for directory-based context switching.
+
+## What is multiprof?
+
+multiprof lets you use command-line tools like `aws`, `gcloud`, and `gh` with
+different configurations depending on which directory you are in. It achieves this
+by giving each of your work contexts its own separate home directory.
+
+## How it Works
+
+The system has three main components:
+  1. The `multiprof` tool you are using now.
+  2. A dedicated "Wrapper Directory" (~/.local/bin/multiprof) that holds symlinks.
+  3. The "Wrappers" themselves (e.g., `aws_w`), which are just symlinks to `multiprof`.
+
+When you run a Wrapper, multiprof intercepts the call, sets the $HOME variable
+based on rules you define, and then executes the original command. This isolates
+the tool's configuration, cache, and auth data to a specific context.
+
+## Why set $HOME? Why not just $XDG_DATA_HOME or $XDG_CONFIG_HOME, etc?
+
+The tools are inconsistent and unreliable in their use of the XDG_* vars.
+$HOME seems to work everywhere. Use of $HOME _may_ cause unforeseen issues, 
+but I have not observed any for any of the major cli tools. 
+
+## Getting Started
+
+To set up your system for the first time, simply run the setup wizard:
+  multiprof init
+
+This command will create the necessary configuration and directories and give you
+copy-pasteable instructions to configure your shell.
+
+--------------------------------------------------------------------------------
+
+## Command Reference
+
+init
+  Runs the one-time setup wizard. It's safe to run this again at any time
+  to see the setup instructions.
+
+add-rule --pattern <p> --home <h>
+  Adds a context Rule to your config file.
+
+add-wrapper <command>
+  Creates a new Wrapper for a command in your Wrapper Directory.
+
+list
+  Lists all configured Rules in their order of priority.
+
+generate-completions
+  Generates shell completion code for all suffixed Wrappers. This is meant
+  to be used by your shell's startup file.
+
+help
+  Shows this help message.
+
