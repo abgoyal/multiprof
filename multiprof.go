@@ -2,8 +2,8 @@ package main
 
 import (
 	"bytes"
-        // the initial _ needs to be there,
-        // otherwise we get "embed imported and not used"
+	// the initial _ needs to be there,
+	// otherwise we get "embed imported and not used"
 	_ "embed"
 	"flag"
 	"fmt"
@@ -19,11 +19,12 @@ import (
 )
 
 // --- Embedded Content ---
+//
 //go:embed help.txt
 var helpText string
+
 //go:embed default.toml
 var defaultConfigToml string
-
 
 // --- Constants ---
 const (
@@ -102,14 +103,15 @@ func runWrapper() {
 	config, _ := loadConfig()
 	cwd, _ := os.Getwd()
 	expandedCwd := expandPath(cwd)
-	debugf("Current directory: %s", expandedCwd)
+	expandedCwdWithSlash := expandedCwd + string(os.PathSeparator)
+	debugf("Checking match for '%s' and '%s'", expandedCwd, expandedCwdWithSlash)
 
 	var newHome string
 	profileMatched := false
 	for _, rule := range config.Rules {
 		expandedPattern := expandPath(rule.Pattern)
 		g, _ := glob.Compile(expandedPattern)
-		if g.Match(expandedCwd) {
+		if g.Match(expandedCwd) || g.Match(expandedCwdWithSlash) {
 			debugf("Matched Rule with pattern: '%s'", rule.Pattern)
 			newHome = expandPath(rule.Home)
 			profileMatched = true
@@ -295,7 +297,9 @@ func expandPath(path string) string {
 	return os.ExpandEnv(path)
 }
 func getWrapperDir() (string, error) { return expandPath(filepath.Join("~/", wrapperDirName)), nil }
-func getConfigPath() (string, error) { return expandPath(filepath.Join("~/", configDirName, configFileName)), nil }
+func getConfigPath() (string, error) {
+	return expandPath(filepath.Join("~/", configDirName, configFileName)), nil
+}
 func createDefaultConfig() error {
 	configPath, _ := getConfigPath()
 	if _, err := os.Stat(configPath); err == nil {
@@ -324,4 +328,3 @@ func saveConfig(config Config) error {
 	defer f.Close()
 	return toml.NewEncoder(f).Encode(config)
 }
-
