@@ -1,0 +1,13 @@
+[INFO] To complete the setup, please perform the following steps:
+
+  1. Add the Wrapper Directory to the beginning of your PATH.
+     This ensures your shell finds the Wrappers first.
+     Open your shell profile (~/.bashrc, ~/.zshrc, etc.) and add this line:
+
+     export PATH="{{.WrapperDir}}:$PATH"
+
+  2. Ensure bash-completion is sourced in your shell profile.
+     (This is default on most systems).
+
+  3. Restart your shell or run `source ~/.bashrc` to apply the changes.
+
