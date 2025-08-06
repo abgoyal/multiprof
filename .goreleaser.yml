@@ -1,0 +1,42 @@
+version: 2
+project_name: multiprof
+
+builds:
+  - id: multiprof
+    binary: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}_{{ .Tag }}'
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+    main: ./
+    ldflags:
+      - -s -w
+
+archives:
+  -
+    id: multiprof-archive
+    formats: binary
+    wrap_in_directory: false
+    strip_binary_directory: true
+    name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}_{{ .Tag }}'
+
+checksum:
+  name_template: 'checksums.txt'
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+
+release:
+  # 'auto' means it will be marked as a pre-release if the tag is a pre-release
+  # (e.g., v1.0.0-beta1) and a full release otherwise.
+  prerelease: auto
+
