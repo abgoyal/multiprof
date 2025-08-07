@@ -1,7 +1,8 @@
-================================================================================
-                                  multiprof
-      A Tool-Agnostic Context Switcher for the Command Line
-================================================================================
+# multiprof
+
+##A Tool-Agnostic Context Switcher for the Command Line
+
+***
 
 multiprof lets you manage multiple accounts and configurations for any CLI tool
 by sandboxing your home directory based on your current location.
