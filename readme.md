@@ -5,7 +5,7 @@
 ***
 
 multiprof lets you manage multiple accounts and configurations for any CLI tool
-by sandboxing your home directory based on your current location.
+by sandboxing your home directory based on your current location (cwd).
 
 It prevents credential conflicts and accidental operations by ensuring that when
 you are working in a specific project directory, your tools (like `aws`,
