@@ -1,6 +1,6 @@
 # multiprof
 
-##A Tool-Agnostic Context Switcher for the Command Line
+## A Tool-Agnostic Context Switcher for the Command Line
 
 ***
 
